@@ -11,6 +11,7 @@ var Comments = new Schema({
 
 var BlogPost = new Schema({
     title: String,
+    slug: String,
     body: String,
     date: { type: Date, default: Date.now },
 	update:{ type: Date, default: Date.now },
