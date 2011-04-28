@@ -59,6 +59,7 @@ app.configure(function(){
 
 require('./routes/site')(app);
 require('./routes/post')(app);
+require('./routes/comment')(app);
 
 if (!module.parent) {
   app.listen(3000);
