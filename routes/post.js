@@ -8,7 +8,10 @@ module.exports = function(app){
     /**
      * Apply basic auth to all post related routes
      */
-    app.all('/post(/*)?', basicAuth(function(user, pass){
+    app.all('/post/add', basicAuth(function(user, pass){
+        return 'admin' == user && 'express' == pass;
+    }));
+    app.all('/post/:post/edit', basicAuth(function(user, pass){
         return 'admin' == user && 'express' == pass;
     }));
     
@@ -41,7 +44,6 @@ module.exports = function(app){
      * Save a post.
      */
     app.post('/post', function(req, res){
-        console.log(req.body.post);
         var data = req.body.post, post = new BlogPost(data);//post = new Post(data.title, data.body);
         post.save(function(err){
             req.flash('info', 'Successfully created post _%s_', post.title);
@@ -65,7 +67,7 @@ module.exports = function(app){
      * Display the post.
      */
     app.get('/post/:post', function(req, res){
-        res.render('post', {
+        res.render('post/detail', {
             post: req.post
         });
     });
@@ -87,7 +89,6 @@ module.exports = function(app){
         Post.update({
             _id: post._id
         }, req.body.post, function(err){
-			console.log(arguments);
             if (err) {
                 console.log(err);
                 return next(err);
