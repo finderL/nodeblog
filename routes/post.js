@@ -46,21 +46,13 @@ module.exports = function(app){
     app.post('/post', function(req, res){
         var data = req.body.post, post = new BlogPost(data);//post = new Post(data.title, data.body);
         post.save(function(err){
+            if (err) {
+                req.flash('error', err.message);
+                return res.redirect('back');
+            }
             req.flash('info', 'Successfully created post _%s_', post.title);
             res.redirect('/post/' + post.id);
         });
-        
-        /*post.validate(function(err){
-         if (err) {
-         req.flash('error', err.message);
-         return res.redirect('back');
-         }
-         
-         post.save(function(err){
-         req.flash('info', 'Successfully created post _%s_', post.title);
-         res.redirect('/post/' + post.id);
-         });
-         });*/
     });
     
     /**

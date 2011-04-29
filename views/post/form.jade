@@ -13,6 +13,9 @@ form#post(action=base + '/post' + (post.title ? '/' + post.id : ''), method='pos
     label(for='post[title]') Title:
     input(type='text', name='post[title]', value=post.title)
   p
+    label(for='post[slug]') Slug:
+    input(type='text', name='post[slug]', value=post.slug)
+  p
     label(for='post[body]') Body:
     textarea(name='post[body]')= post.body || ''
   p

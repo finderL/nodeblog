@@ -1,19 +1,38 @@
-h1 Blog
+#container
+  h1 Blog
 
-!= messages()
+  != messages()
 
-- if (count)
-  p Display all #{count} post(s)
-  #posts!= partial('post', posts)
-- else
-  p 
-    | It looks like you have no posts!
-  p
-    | Click
-    a(href=base + '/post/add') here 
-    | to create a post. Login
-    | as
-    em "admin" 
-    | and
-    em "express"
-    | .
+  - if (posts.count)
+    p Display all #{posts.count} post(s)
+    p
+      | Click
+      a(href=base + '/post/add') here 
+      | to create a post. Login
+      | as
+      em "admin" 
+      | and
+      em "express"
+      | .
+    #posts!= partial('post', posts.object_list)
+    .pagination
+      span.step-links
+        - if (posts.has_previous)
+          a(href='?page='+posts.previous_page_number) previous
+        span.current
+          Page #{posts.number} of #{posts.paginator.num_pages}
+        - if (posts.has_next)
+          a(href='?page='+posts.next_page_number) next
+  - else
+    p 
+      | It looks like you have no posts!
+    p
+      | Click
+      a(href=base + '/post/add') here 
+      | to create a post. Login
+      | as
+      em "admin" 
+      | and
+      em "express"
+      | .
+script(type='text/javascript',src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js')

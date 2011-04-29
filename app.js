@@ -1,10 +1,12 @@
 
 // Expose modules in ./support for demo purposes
 require.paths.unshift(__dirname + '/../../support');
-require.paths.unshift('/home/nttdocomo/workspace/libs/mongoose/lib');
+settings = require(__dirname + '/settings');
+require.paths.unshift(settings.mongoosePath);
 mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/my_database');
 models = require(__dirname + '/models/models');
+Paginator = require(__dirname + '/util/pagination').Paginator;
 BlogPost = models.BlogPost;
 
 /**
